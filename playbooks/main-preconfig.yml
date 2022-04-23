@@ -1,0 +1,8 @@
+- name: base systems preconfiguration
+  hosts: all
+  remote_user: root
+  roles:
+    - ../roles/prereq
+  gather_facts: no
+
+  
