@@ -1,0 +1,44 @@
+# - name: install k3s and start HA cluster
+#   shell: curl -sfL https://get.k3s.io | INSTALL_K3s_EXEC="server --cluster-init" sh -
+
+# - name: get the k3s node-token for the cluster
+#   shell: cat /var/lib/rancher/k3s/server/node-token
+#   register: token
+
+# - name: save token into a dummy host
+#   add_host:
+#     name: "k3_init_dummy"
+#     k3s_token: "{{ token.stdout }}"
+
+# - name: print k3s_token
+#   debug:
+#     var: hostvars['k3_init_dummy']['k3s_token']
+
+# - name: make sure k3s is started and enabled
+#   service:
+#     name: k3s
+#     state: started
+#     enabled: yes
+
+# - name: pause one minute so cluster initialization is definitely finished
+#   pause:
+#     minutes: 1
+
+
+
+---
+- name: get a random token for the cluster
+  shell: echo $RANDOM | md5sum | head -c 30; echo;
+  register: token
+
+- name: save token into a dummy host
+  add_host:
+    name: "k3_init_dummy"
+    k3s_token: "{{ token.stdout }}"
+
+- name: print k3s_token
+  debug:
+    var: hostvars['k3_init_dummy']['k3s_token']
+
+- name: install k3s and start HA cluster
+  shell: k3s server --cluster-init &

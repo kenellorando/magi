@@ -1,0 +1,9 @@
+---
+- name: uninstall k3s
+  shell: rm /usr/local/bin/k3s
+
+- name: kill everything running in k3s
+  shell: /usr/local/bin/k3s-killall.sh
+
+- name: uninstall k3s
+  shell: /usr/local/bin/k3s-uninstall.sh

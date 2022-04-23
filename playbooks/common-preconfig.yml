@@ -2,7 +2,5 @@
   hosts: all
   remote_user: root
   roles:
-    - ../roles/prereq
+    - ../roles/common-preconfig
   gather_facts: no
-
-  

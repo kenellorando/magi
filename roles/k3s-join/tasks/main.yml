@@ -1,0 +1,7 @@
+---
+- name: print k3s_token
+  debug:
+    var: hostvars['k3_init_dummy']['k3s_token']
+
+- name: join HA cluster
+  shell: K3S_TOKEN={{ hostvars['k3_init_dummy']['k3s_token'] }} k3s server --server https://10.0.0.12:6443 &

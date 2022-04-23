@@ -1,0 +1,6 @@
+- name: install and initialize k3s cluster
+  shell: k3sup install --ip 10.0.0.12 --user ken --cluster --k3s-version v1.23.5+k3s1
+
+- name: install and join k3s cluster
+  shell: k3sup join --ip local_ip --user root --server-user root --server-ip 10.0.0.12 --server --k3s-version v1.23.5+k3s1
+
