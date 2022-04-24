@@ -21,7 +21,7 @@
     jump: ACCEPT
 
 - name: install k3s and join HA cluster
-  shell: curl -sfL https://get.k3s.io | K3S_TOKEN={{ hostvars['k3_init_dummy']['k3s_token'] }} sh -s server --server https://10.0.0.9:6443
+  shell: curl -sfL https://get.k3s.io | K3S_TOKEN={{ hostvars['k3_init_dummy']['k3s_token'] }} sh -s server --server https://10.0.0.12:6443 --advertise-address 10.0.0.9 # <-- --server is the address of the original initializing node, --advertise-address is the loadbalancer address
 
 - name: make sure k3s is started and enabled
   service:

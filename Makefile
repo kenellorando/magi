@@ -1,6 +1,3 @@
-common-preconfig:
-	ansible-playbook -i hosts/hosts.ini playbooks/common-preconfig.yml
-
 common-config:
 	ansible-playbook -i hosts/hosts.ini playbooks/common-config.yml
 

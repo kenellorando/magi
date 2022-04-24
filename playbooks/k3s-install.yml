@@ -1,11 +1,11 @@
 - name: k3s cluster init
-  hosts: magi[0]
+  hosts: compute[0]
   remote_user: root
   roles:
   - ../roles/k3s-init
 
 - name: k3s cluster join
-  hosts: magi[1:2]
+  hosts: compute[1:]
   remote_user: root
   roles:
   - ../roles/k3s-join

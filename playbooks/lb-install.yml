@@ -1,11 +1,11 @@
-- name: install HAProxy
+- name: install loadbalancer software
   hosts: loadbalancers
   remote_user: root
   roles:
-  - ../roles/haproxy
+  - ../roles/lb-install
 
-- name: install keepalived
-  hosts: loadbalancers
+- name: reconfigure kube cluster apiserver endpoints set to loadbalancer
+  hosts: compute
   remote_user: root
   roles:
-  - ../roles/keepalived
+  - ../roles/k3s-config-on-lb

@@ -1,3 +1,18 @@
+- name: update base packages
+  raw: apt update -y
+
+- name: upgrade base packages
+  raw: apt upgrade -y
+
+- name: autoremove packages
+  raw: apt autoremove -y
+
+- name: autoclean packages
+  raw: apt autoclean -y
+
+- name: install python
+  raw: apt install --yes python3
+
 - name: update and upgrade base packages
   apt:
     name: "*"

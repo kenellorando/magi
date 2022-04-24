@@ -21,7 +21,7 @@
     jump: ACCEPT
 
 - name: install k3s and start HA cluster
-  shell: curl -sfL https://get.k3s.io | sh -s server --cluster-init
+  shell: curl -sfL https://get.k3s.io | sh -s server --cluster-init --advertise-address 10.0.0.9 --tls-san 10.0.0.9 # <-- advertise-address and tls-san is the loadbalancer address. the former tells the whole cluster where the apiserver is, and tls-san adds the lb IP to the cluster certificate list
 
 - name: get cluster node token
   shell: cat /var/lib/rancher/k3s/server/node-token
@@ -38,10 +38,10 @@
     state: started
     enabled: yes
 
-- name: get kube config for local cluster access
-  copy:
-    src: /etc/rancher/k3s/k3s.yaml
-    dest: ~/home/ken/.kube/config
-    remote_src: yes
-    owner: "ken"
-    mode: "600"
+# - name: get kube config for local cluster access
+#   copy:
+#     src: /etc/rancher/k3s/k3s.yaml
+#     dest: /home/ken/.kube/config
+#     remote_src: yes
+#     owner: "ken"
+#     mode: "600"

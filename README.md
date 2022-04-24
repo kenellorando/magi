@@ -1,22 +1,24 @@
 Configuration management code for my home RPi cluster for hosting  internal applications-- in particular, containerized applications on K3s. The steps and software configuration a unique to my lab but can be adapted quite easily to your needs. 
 
-## Setup and Installation
+## Setup
 
 1. Cluster hardware must be assembled (pis, fans, hats, switches, cabling).
 2. Base operating systems (I use Debian) should be flashed to each node's SD card, ensuring a `sysconf` file is configured to set system hostname and an allowed SSH key.
-3. Configure your `hosts/hosts.ini` file with the correct IP addresses of your nodes.
-4. Before any other playbook can be executed, the `common-preconfig.yml` playbook must run to update system software and install Python, which subsequent playbooks are dependent on. Run `make common-preconfig` to do this.
+3. Configure the `hosts/hosts.ini` file with the correct IP addresses of your nodes.
+4. The `k3s-init` and `k3s-join` roles have tasks with hardcoded IP addresses of my loadbalancer floating IP and the initializing cluster node IP. They likely need to be changed to suit your network IPs.
 
-The cluster is ready to have all other software configured.
+## Installing
 
-## Installing K3s in HA Cluster Mode
+These commands will configure all base software on your nodes appropriately, install a K3s cluster in HA Cluster Mode on your `compute` nodes, and install HAProxy to your `loadbalancer` nodes.
 
-1. `make k3s-install`
+1. `make common-config`
+2. `make k3s-install`
+3. `make lb-install`
 
-If this is the first time installing K3s to the nodes, it may take a while for the cluster to initialize on the first node. If you receive errors when the nodes attempt to join the cluster (check `journalctl -u k3s --no-pager --no-hostname`), wait a minute, and try running the installation again.
+That should 
 
-## Stop Cluster, Uninstall K3s
+## Accessing the Cluster Locally
 
-This triggers a script which also removes any firewall exceptions made for K3s.
-
-1. `make k3s-destroy`
+1. Copy a `/etc/rancher/k3s/k3s.yaml` file from any of the compute nodes to your local machine's `~/.kube/config`.
+2. Change the `server` IP to the load balancer's IP.
+3. Run `kubectl get nodes` to test.
