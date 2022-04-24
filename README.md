@@ -1,4 +1,4 @@
-This repository contains configuration management code for my home Raspberry Pi cluster for hosting personal applications on K3s. The system runs a loadbalancer node in front of a triple-node compute cluster that perform both control plane and worker duties. The steps and software configuration a unique to my lab but can be adapted quite easily to your needs. 
+This repository contains configuration management code for my home Raspberry Pi cluster for hosting personal applications on K3s. The system runs a loadbalancer node in front of a triple-node compute cluster whose nodes each perform both control plane and worker duties. The steps and software configuration are unique to my lab but can be adapted quite easily to your needs. 
 
 ## Setup
 
