@@ -1,4 +1,0 @@
-- name: k3s destroy
-  hosts: magi
-  roles:
-    - ../roles/k3s-destroy

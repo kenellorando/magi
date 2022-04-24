@@ -1,18 +1,11 @@
-
-- name: k3s base installation
-  hosts: magi
-  remote_user: root
-  roles:
-    - ../roles/k3sup
-
-- name: k3s cluster initialization
+- name: k3s cluster init
   hosts: magi[0]
   remote_user: root
   roles:
-    - ../roles/k3sup-init
+  - ../roles/k3s-init
 
 - name: k3s cluster join
   hosts: magi[1:2]
   remote_user: root
   roles:
-    - ../roles/k3sup-join
+  - ../roles/k3s-join

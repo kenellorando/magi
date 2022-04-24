@@ -1,44 +1,47 @@
-# - name: install k3s and start HA cluster
-#   shell: curl -sfL https://get.k3s.io | INSTALL_K3s_EXEC="server --cluster-init" sh -
-
-# - name: get the k3s node-token for the cluster
-#   shell: cat /var/lib/rancher/k3s/server/node-token
-#   register: token
-
-# - name: save token into a dummy host
-#   add_host:
-#     name: "k3_init_dummy"
-#     k3s_token: "{{ token.stdout }}"
-
-# - name: print k3s_token
-#   debug:
-#     var: hostvars['k3_init_dummy']['k3s_token']
-
-# - name: make sure k3s is started and enabled
-#   service:
-#     name: k3s
-#     state: started
-#     enabled: yes
-
-# - name: pause one minute so cluster initialization is definitely finished
-#   pause:
-#     minutes: 1
-
-
-
 ---
-- name: get a random token for the cluster
-  shell: echo $RANDOM | md5sum | head -c 30; echo;
-  register: token
+- name: open apiserver port
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "6443"
+    jump: ACCEPT
 
-- name: save token into a dummy host
-  add_host:
-    name: "k3_init_dummy"
-    k3s_token: "{{ token.stdout }}"
+- name: open kubelet metrics port
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "10250"
+    jump: ACCEPT
 
-- name: print k3s_token
-  debug:
-    var: hostvars['k3_init_dummy']['k3s_token']
+- name: open HA support ports
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "2379:2380"
+    jump: ACCEPT
 
 - name: install k3s and start HA cluster
-  shell: k3s server --cluster-init &
+  shell: curl -sfL https://get.k3s.io | sh -s server --cluster-init
+
+- name: get cluster node token
+  shell: cat /var/lib/rancher/k3s/server/node-token
+  register: node_token
+
+- name: save secret into dummy host
+  add_host:
+    name: "k3_init_dummy"
+    k3s_token: "{{ node_token.stdout }}"
+
+- name: make sure k3s is started and enabled
+  service:
+    name: k3s
+    state: started
+    enabled: yes
+
+- name: get kube config for local cluster access
+  copy:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: ~/home/ken/.kube/config
+    remote_src: yes
+    owner: "ken"
+    mode: "600"

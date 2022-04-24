@@ -1,0 +1,19 @@
+---
+- name: install haproxy and keepalived
+  apt:
+    name:
+    - haproxy
+    - keepalived
+    state: latest
+
+- name: upload haproxy config
+  template:
+    src: templates/haproxy.cfg
+    dest: /etc/haproxy/haproxy.cfg
+    backup: yes
+
+- name: restart and enable haproxy service
+  service:
+    name: haproxy
+    state: restarted
+    enabled: yes

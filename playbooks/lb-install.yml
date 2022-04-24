@@ -1,0 +1,11 @@
+- name: install HAProxy
+  hosts: loadbalancers
+  remote_user: root
+  roles:
+  - ../roles/haproxy
+
+- name: install keepalived
+  hosts: loadbalancers
+  remote_user: root
+  roles:
+  - ../roles/keepalived
