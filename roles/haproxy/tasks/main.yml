@@ -1,9 +1,8 @@
 ---
-- name: install haproxy and keepalived
+- name: install haproxy
   apt:
     name:
     - haproxy
-    - keepalived
     state: latest
 
 - name: upload haproxy config

@@ -1,0 +1,18 @@
+- name: install keepalived
+  apt:
+    name:
+    - keepalived
+    state: latest
+
+- name: upload keepalived master config
+  template:
+    src: templates/keepalived.conf-master
+    dest: /etc/keepalived/keepalived.conf
+    backup: yes
+
+
+- name: restart and enable keepalived service
+  service:
+    name: keepalived
+    state: restarted
+    enabled: yes

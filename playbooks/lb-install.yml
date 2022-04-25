@@ -1,11 +1,28 @@
-- name: install loadbalancer software
+- name: install certbot on all loadbalancers
   hosts: loadbalancers
   remote_user: root
   roles:
-  - ../roles/lb-install
+  - ../roles/certbot
 
-- name: reconfigure kube cluster apiserver endpoints set to loadbalancer
-  hosts: compute
+- name: install haproxy on all loadbalancers
+  hosts: loadbalancers
   remote_user: root
   roles:
-  - ../roles/k3s-config-on-lb
+  - ../roles/haproxy
+
+
+
+
+
+
+# - name: install keepalived master on primary loadbalancer
+#   hosts: loadbalancers[0]
+#   remote_user: root
+#   roles:
+#   - ../roles/keepalived-master
+
+# - name: install keepalived backup on backup loadbalancers
+#   hosts: loadbalancers[1:]
+#   remote_user: root
+#   roles:
+#   - ../roles/keepalived-backup
