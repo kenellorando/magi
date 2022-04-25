@@ -7,8 +7,11 @@ This repository contains configuration management code for my home Raspberry Pi 
 1. Cluster hardware must be assembled (pis, fans, hats, switches, cabling).
 2. Base operating systems (I use Debian 11) should be imaged to each node's SD card. 
    1. If your OS supports it, a `sysconf` text file in the root of the directory should be configured to set system hostname and an allowed SSH key. If you don't do this, you'll need to configure your SSH access the traditionally tedious way.
-3. Configure the `hosts/hosts.ini` file with the correct IP addresses of your nodes.
-4. The `k3s-init` and `k3s-join` roles have tasks with hardcoded IP addresses of my loadbalancer floating IP and the initializing cluster node IP. They likely need to be changed to suit your own network IPs.
+3. Configure this repository to your own needs:
+   1. Configure the `hosts/hosts.ini` file with the correct IP addresses of your nodes.
+   2. The `k3s-init` and `k3s-join` roles need to be updated with your cluster node IPs.
+   3. The `certbot` role needs to be configured with your DNS. 
+   4. The `haproxy` role has a template which needs to be configured with your IP addresses and certbot certificates.
 
 ### Installing
 
