@@ -15,3 +15,10 @@
   remote_user: root
   roles:
   - ../roles/keepalived
+
+- name: install an ingress controller to the cluster
+  hosts: compute[0]
+  remote_user: root
+  tasks:
+  - name: install controller
+    shell: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/baremetal/deploy.yaml
