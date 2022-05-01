@@ -1,0 +1,11 @@
+- name: stop and destroy the cluster
+  hosts: compute
+  remote_user: root
+  tasks:
+    - name: WARNING
+      pause:
+        prompt: Running this playbook will completely destroy the cluster and all of its resources. Press return to continue.
+    - name: destroy the cluster
+      shell: /usr/local/bin/k3s-killall.sh
+    - name: uninstall k3s
+      shell: /usr/local/bin/k3s-uninstall.sh

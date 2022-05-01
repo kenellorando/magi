@@ -3,6 +3,3 @@ common-config:
 
 k3s-install:
 	ansible-playbook -i hosts/hosts.ini playbooks/k3s-install.yml
-
-lb-install:
-	ansible-playbook -i hosts/hosts.ini playbooks/lb-install.yml

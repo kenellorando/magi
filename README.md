@@ -1,4 +1,6 @@
-This repository contains configuration management code for my home Raspberry Pi cluster for hosting personal applications on K3s. The system runs a loadbalancer node in front of a triple-node compute cluster whose nodes each perform both control plane and worker duties. The steps and software configuration are unique to my lab but can be adapted quite easily to your needs. 
+This repository contains configuration management code for my home Raspberry Pi cluster for hosting personal applications on K3s. The system runs a triple-node compute cluster whose nodes each perform both control plane and worker duties. The nodes are configured with a shared virtual IP which you can use for access and to route traffic to.
+
+The steps and software configuration are unique to my lab but can be adapted quite easily to your needs. 
 
 ## Setup
 
@@ -10,19 +12,17 @@ This repository contains configuration management code for my home Raspberry Pi 
 3. Configure this repository to your own needs:
    1. Configure the `hosts/hosts.ini` file with the correct IP addresses of your nodes.
    2. The `k3s-init` and `k3s-join` roles need to be updated with your cluster node IPs.
-   3. The `certbot` role needs to be configured with your DNS. 
-   4. The `haproxy` role has a template which needs to be configured with your IP addresses and certbot certificates.
+   3. The `keepalived` role has a template with a hardcoded shared IP, that you may wish to change.
 
 ### Installing
 
-These commands will configure all base software on your nodes appropriately, install a K3s cluster in HA Cluster Mode on your `compute` nodes, and install HAProxy to your `loadbalancer` nodes.
+These commands will configure all base software on your nodes appropriately, then install a K3s cluster in HA Cluster Mode and a shared IP for your `compute` nodes.
 
-1. `make common-config`
+1. `make common-config` (this **must** run first)
 2. `make k3s-install`
-3. `make lb-install`
 
 ### Testing Cluster Connection
 
 1. Copy a `/etc/rancher/k3s/k3s.yaml` file from any of the compute nodes to your local machine's `~/.kube/config`.
-2. Change the `server` IP to the load balancer's IP.
+2. Change the `server` IP to the shared virtual IP (set by `keepalived`).
 3. Run `kubectl get nodes` to test.

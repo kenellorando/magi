@@ -9,3 +9,9 @@
   remote_user: root
   roles:
   - ../roles/k3s-join
+
+- name: install keepalived on all compute nodes
+  hosts: compute
+  remote_user: root
+  roles:
+  - ../roles/keepalived

@@ -4,12 +4,11 @@
     - keepalived
     state: latest
 
-- name: upload keepalived master config
+- name: upload keepalived backup configs
   template:
-    src: templates/keepalived.conf-master
+    src: templates/keepalived.conf
     dest: /etc/keepalived/keepalived.conf
     backup: yes
-
 
 - name: restart and enable keepalived service
   service:
