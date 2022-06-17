@@ -1,8 +1,19 @@
-This repository contains configuration management code for my home Raspberry Pi cluster for hosting personal applications on K3s. The system runs a triple-node compute cluster whose nodes each perform both control plane and worker duties. The nodes are configured with a shared virtual IP which you can use for access and to route traffic to.
 
-The steps and software configuration are unique to my lab but can be adapted quite easily to your needs. 
+# magi
+This repository contains configuration management code for my home Raspberry Pi cluster for hosting personal containerized applications on K3s. The system runs a triple-node compute cluster whose nodes each perform both control plane and worker duties. The nodes are configured with a shared virtual IP which you can use for access and to route traffic to. The system is highly avaialble becasue it tolerates failure of any single node.
+
+## Blog Post
+**Read my detailed writeup of this project:** https://kenellorando.notion.site/Magi-HA-K3s-RPi-Cluster-f2394b1be56b47c8abbaa3a50d4aac13
+
+
+![image](https://user-images.githubusercontent.com/17265041/174359115-7c758472-6507-4b8b-9633-0d7aaef7cc6d.png)
+
+
+
 
 ## Setup
+
+The steps and software configuration are unique to my lab but can be adapted quite easily to your needs. 
 
 ### Manual Pre-Requisites
 
