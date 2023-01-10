@@ -29,7 +29,7 @@
     autoclean: yes
 
 
-- name: install system utilities - git, tmux, vim, telnet, netcat
+- name: install system utilities - git, tmux, vim, telnet, netcat, lsof
   apt:
     name:
       - git
